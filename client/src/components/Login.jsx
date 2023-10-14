@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = (data) => {
+	const onSubmit = data => {
 		console.log(data);
 		localStorage.setItem("user", JSON.stringify(data));
 		if (data.email == "admin@gmail.com" && data.password == "admin123") {
@@ -38,7 +38,8 @@ const Login = () => {
 					<form
 						action=""
 						className="flex flex-col gap-4"
-						onSubmit={handleSubmit(onSubmit)}>
+						onSubmit={handleSubmit(onSubmit)}
+					>
 						<div className="flex flex-col w-full">
 							<label htmlFor="email">Email</label>
 							<input
@@ -83,7 +84,8 @@ const Login = () => {
 						<div className="">
 							<button
 								className="w-full rounded-md bg-blue-400 hover:bg-blue-500 py-2 font-semibold text-lg text-white duration-150 ease-in transition-colors"
-								type="submit">
+								type="submit"
+							>
 								Login
 							</button>
 						</div>
