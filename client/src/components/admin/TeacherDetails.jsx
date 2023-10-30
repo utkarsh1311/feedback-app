@@ -71,7 +71,7 @@ const TeacherDetails = () => {
 				</label>
 			</div>
 			<div className="grid grid-cols-2 my-4 gap-6">
-				<div className="px-10">
+				<div className="px-10 ">
 					<h1 className="text-2xl mb-6">Personal Details</h1>
 					<div>
 						<form

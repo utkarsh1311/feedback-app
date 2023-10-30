@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Teachers = () => {
+	const [query, setQuery] = useState("");
 	const [teachers, setTeachers] = useState([
 		{
 			id: 1,
