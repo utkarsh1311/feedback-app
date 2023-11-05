@@ -6,6 +6,7 @@ import Teachers from "./components/admin/Teachers";
 import Students from "./components/admin/Students";
 import Feedback from "./components/admin/Feedback";
 import TeachersDetails from "./components/admin/TeacherDetails";	
+import AddTeacher from "./components/admin/AddTeacher";
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 					<Route path="teachers/:id" element={<TeachersDetails />} />
 					<Route path="students" element={<Students />} />
 					<Route path="feedbacks" element={<Feedback />} />
+					<Route path="addTeacher" element={<AddTeacher />} />
 				</Route>
 				<Route path="/teachers" element={<AdminDashboard />}>
 					<Route index element={<Home />} />
