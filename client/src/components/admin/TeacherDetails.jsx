@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { set, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import Loader from "../../assets/Loader.svg";
 
 const TeacherDetails = () => {
 	const { id } = useParams();
 	const [loading, setLoading] = useState(false);
-
+	const [assignedStudents, setassignedStudents] = useState([]);
+	const [student, setStudent] = useState({ name: "", email: " " });
 	const [teacher, setTeacher] = useState();
+	const [isOpen, setisOpen] = useState(false);
+	console.log(assignedStudents)
 
 	useEffect(() => {
 		const getTeacher = async () => {
@@ -30,11 +33,25 @@ const TeacherDetails = () => {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = data => {
-		console.log("data :>> ", data);
+	const onSubmit = async data => {
+		// combine data and assignedStudents in one object
+		try {
+			await axios.put(`http://localhost:3001/teachers/${id}`, {
+				...data,
+				assignedStudents,
+			});
+			console.log({ ...data, assignedStudents });
+			setassignedStudents([]);
+			reset();
+			navigate(-1);
+		} catch (error) {
+			alert("Something went wrong");
+			console.log(error);
+		}
 	};
 	const [Isopen, setIsopen] = React.useState(false);
 
@@ -238,9 +255,10 @@ const TeacherDetails = () => {
 											</label>
 											<input
 												id="studentname"
-												{...register("studentname", {
-													required: "Name is required.",
-												})}
+												value={student.name}
+												onChange={e =>
+													setStudent({ ...student, name: e.target.value })
+												}
 												placeholder="Enter Student name"
 												required
 												type="text"
@@ -252,6 +270,10 @@ const TeacherDetails = () => {
 												Student Email
 											</label>
 											<input
+												value={student.email}
+												onChange={e =>
+													setStudent({ ...student, email: e.target.value })
+												}
 												id="studentemail"
 												placeholder="Enter Student email"
 												required
@@ -259,11 +281,21 @@ const TeacherDetails = () => {
 												className="w-full outline-none focus:outline-none p-3 rounded-lg text-sm "
 											/>
 										</div>
-										<input
+										<button
+											onClick={() => {
+												if (student.name && student.email) {
+													setassignedStudents([...assignedStudents, student]);
+													setStudent({ name: "", email: "" });
+													setIsopen(false);
+												}
+											}}
 											type="submit"
 											value="Submit Details"
-											className=" px-4 py-2 bg-sec_dark text-white rounded-md"
-										/>
+											className=" px-4 py-2 bg-sec_dark text-white rounded-md cursor-pointer"
+										>
+											{" "}
+											SUbmit
+										</button>
 									</form>
 								</div>
 							</div>

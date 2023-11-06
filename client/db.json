@@ -20,12 +20,14 @@
       ]
     },
     {
-      "id": 2,
       "name": "Amit Vyas",
+      "phone": "987-654-3210",
       "email": "teacher2@example.com",
-      "phoneNumber": "987-654-3210",
       "password": "password2",
-      "assignedStudents": []
+      "studentname": "",
+      "studentemail": "",
+      "assignedStudents": [],
+      "id": 2
     },
     {
       "id": 3,
@@ -104,68 +106,132 @@
         }
       ],
       "id": 7
+    },
+    {
+      "name": "Utkarsh Maurya",
+      "phoneNumber": "+919956464656",
+      "email": "hello@gmail.com",
+      "password": "nckjskfbhsbfhushbefu",
+      "assignedStudents": [
+        {
+          "name": "helo",
+          "email": "s@gmail.com"
+        }
+      ],
+      "id": 8
+    },
+    {
+      "name": "Samarth Kashyap",
+      "phone": "0934028340",
+      "email": "hoe@gmail.com",
+      "password": "hdsuhfiusehifefwe",
+      "assignedStudents": [
+        {
+          "name": "heelo",
+          "email": "dd@fff.com"
+        }
+      ],
+      "id": 9
+    },
+    {
+      "name": "test",
+      "phoneNumber": "8324928403",
+      "email": "hel@gmail.com",
+      "password": "hefhioehfiuwe",
+      "assignedStudents": [
+        {
+          "name": "j",
+          "email": "ejwfw@gmail.com"
+        },
+        {
+          "name": "hello",
+          "email": "h2@gmasil.com"
+        }
+      ],
+      "id": 10
+    },
+    {
+      "name": "srishti",
+      "phoneNumber": "9593432323",
+      "email": "hello@gmail.com",
+      "password": "hellohello",
+      "assignedStudents": [
+        {
+          "name": "tanish",
+          "email": "aNGRY@GMAIL.COM"
+        }
+      ],
+      "id": 11
     }
   ],
   "students": [
     {
       "name": "John Smith",
-      "phone": "555-123-4567",
+      "phoneNumber": "555-123-4567",
       "email": "john.smith@example.com",
       "id": "12345"
     },
     {
       "name": "Jane Doe",
-      "phone": "555-987-6543",
+      "phoneNumber": "555-987-6543",
       "email": "jane.doe@example.com",
       "id": "67890"
     },
     {
       "name": "Michael Johnson",
-      "phone": "555-555-5555",
+      "phoneNumber": "555-555-5555",
       "email": "michael.johnson@example.com",
       "id": "54321"
     },
     {
       "name": "Sarah Brown",
-      "phone": "555-888-7777",
+      "phoneNumber": "555-888-7777",
       "email": "sarah.brown@example.com",
       "id": "24680"
     },
     {
       "name": "David Lee",
-      "phone": "555-333-2222",
+      "phoneNumber": "555-333-2222",
       "email": "david.lee@example.com",
       "id": "13579"
     },
     {
       "name": "Emily Wilson",
-      "phone": "555-444-9999",
+      "phoneNumber": "555-444-9999",
       "email": "emily.wilson@example.com",
       "id": "98765"
     },
     {
       "name": "Daniel Miller",
-      "phone": "555-777-3333",
+      "phoneNumber": "555-777-3333",
       "email": "daniel.miller@example.com",
       "id": "11111"
     },
     {
       "name": "Sophia Taylor",
-      "phone": "555-222-8888",
+      "phoneNumber": "555-222-8888",
       "email": "sophia.taylor@example.com",
       "id": "55555"
     },
     {
       "name": "Matthew Anderson",
-      "phone": "555-666-1111",
+      "phoneNumber": "555-666-1111",
       "email": "matthew.anderson@example.com",
       "id": "22222"
     },
     {
       "name": "Olivia White",
-      "phone": "555-111-9999",
+      "phoneNumber": "555-111-9999",
       "email": "olivia.white@example.com",
       "id": "88888"
+    },
+    {
+      "name": "Utkarsh Maurya",
+      "phoneNumber": "+919956464656",
+      "email": "utkarsh@gmail.com",
+      "password": "",
+      "assignedStudents": [],
+      "id": "qLmxk2N"
     }
   ]
 }

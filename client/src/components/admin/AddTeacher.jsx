@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { set, useForm } from "react-hook-form";
 import close from "../../assets/close.svg";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddTeacher = () => {
 	const [assignedStudents, setassignedStudents] = useState([]);
 	const [student, setStudent] = useState({ name: "", email: " " });
 	const [isOpen, setisOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const {
 		register,
@@ -17,13 +19,19 @@ const AddTeacher = () => {
 
 	const onSubmit = async data => {
 		// combine data and assignedStudents in one object
-		await axios.post("http://localhost:3001/teachers", {
-			...data,
-			assignedStudents,
-		});
-		console.log({ ...data, assignedStudents });
-		setassignedStudents([]);
-		reset();
+		try {
+			await axios.post("http://localhost:3001/teachers", {
+				...data,
+				assignedStudents,
+			});
+			console.log({ ...data, assignedStudents });
+			setassignedStudents([]);
+			reset();
+			navigate(-1);
+		} catch (error) {
+			alert("Something went wrong");
+			console.log(error);
+		}
 	};
 
 	const toggle = () => {
