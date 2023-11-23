@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import back from "../../assets/back.svg";
 
 const TeacherDashboard = () => {
-	const {pathname} = useLocation();
-  const navigate = useNavigate();
-
+	const { pathname } = useLocation();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!localStorage.getItem("user")) {

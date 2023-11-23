@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Slide } from "react-awesome-reveal";
 import FormFeedback from "./FormFeedback";
 import TableFeedback from "./TableFeedback";
