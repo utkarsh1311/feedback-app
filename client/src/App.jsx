@@ -10,6 +10,8 @@ import AddTeacher from "./components/admin/AddTeacher";
 import AddStudent from "./components/admin/AddStudent";
 import StudentDetails from "./components/admin/StudentDetails";
 import TeacherDashboard from "./components/teachers/TeacherDashboard";
+import TeacherHome from "./components/teachers/TeacherHome";
+import TeacherFeedback from "./components/teachers/TeacherFeedback";
 
 function App() {
 	return (
@@ -26,12 +28,14 @@ function App() {
 					<Route path="addTeacher" element={<AddTeacher />} />
 					<Route path="addStudent" element={<AddStudent />} />
 				</Route>
-				<Route path="/teachers" element={<TeacherDashboard />}>
-					{/* <Route index element={<Home />} />
+				<Route path="/teacher" element={<TeacherDashboard />}>
+					{/*  />
 					<Route path="teachers" element={<Teachers />} />
 
 					<Route path="students" element={<Students />} />
 					<Route path="feedbacks" element={<Feedback />} /> */}
+					<Route index element={<TeacherHome />} />
+					<Route path="feedback" element={<TeacherFeedback />} />
 				</Route>
 			</Routes>
 		</div>

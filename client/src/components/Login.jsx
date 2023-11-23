@@ -20,7 +20,7 @@ const Login = () => {
 			data.email == "teacher@gmail.com" &&
 			data.password == "teacher123"
 		) {
-			navigate("/teachers");
+			navigate("/teacher");
 		} else {
 			return <Login />;
 		}
