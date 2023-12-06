@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -11,7 +10,6 @@ const Teachers = () => {
 	useEffect(() => {
 		const getTeachers = async () => {
 			const res = await axios.get(`http://localhost:3001/teachers`);
-			console.log(res.data);
 			setTeachers(res.data);
 		};
 
