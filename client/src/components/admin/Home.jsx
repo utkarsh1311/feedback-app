@@ -13,12 +13,12 @@ const Home = () => {
 				>
 					Teacher
 				</Link>
-				<Link
+				{/* <Link
 					to="/admin/students"
 					className="text-center flex transition-all duration-150 ease-linear justify-center items-center hover:scale-110 rounded-md bg-sec_dark text-white text-3xl font-bold  aspect-video"
 				>
 					Students
-				</Link>
+				</Link> */}
 				<Link
 					to="/admin/feedbacks"
 					className="text-center flex transition-all duration-150 ease-linear justify-center items-center hover:scale-110 rounded-md bg-sec_dark text-white text-3xl font-bold  aspect-video"
