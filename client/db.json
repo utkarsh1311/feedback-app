@@ -1,18 +1,6 @@
 {
   "teachers": [
     {
-      "id": 1,
-      "name": "Sumit Vyas",
-      "email": "teacher1@example.com",
-      "phone": "123-456-7890",
-      "password": "password1",
-      "assignedStudents": [
-        "Eren",
-        "Mikasa",
-        "Armin"
-      ]
-    },
-    {
       "name": "Amit Vyas",
       "phone": "987-654-3210",
       "email": "teacher2@example.com",
@@ -20,23 +8,14 @@
       "assignedStudents": [
         "Reiner",
         "Bertholdt",
-        "Annie"
+        "Annie",
+        "hello"
       ],
       "id": 2
     },
     {
-      "name": "Raman chawla",
-      "phone": "555-555-5555",
-      "email": "teacher3@example.com",
-      "password": "password31",
-      "assignedStudents": [
-        "John",
-        "Michael"
-      ],
-      "id": 3
-    },
-    {
       "id": 4,
+      "status": "ACTIVE",
       "name": "Eren Yeager",
       "email": "teacher4@example.com",
       "phone": "777-777-7777",
@@ -48,16 +27,22 @@
       ]
     },
     {
-      "id": 5,
       "name": "Mikasa Ackerman",
-      "email": "teacher5@example.com",
       "phone": "111-111-1111",
+      "email": "teacher5@example.com",
       "password": "password5",
       "assignedStudents": [
         "Daniel",
         "Sophia",
-        "Matthew"
-      ]
+        "Matthew",
+        "Utkarsh Maurya",
+        "Shivani Maurya",
+        "Levi Ackermann",
+        "Erwin Smith",
+        "Sasuke Uchiha",
+        "Kakashi Hatake"
+      ],
+      "id": 5
     },
     {
       "name": "Bablu BKB",
@@ -68,6 +53,7 @@
         "Olivia",
         "Utkarsh"
       ],
+      "status": "ACTIVE",
       "id": 6
     },
     {
@@ -80,7 +66,8 @@
         "Bertholdt",
         "eren"
       ],
-      "id": 7
+      "id": 7,
+      "status": "ACTIVE"
     }
   ],
   "students": [
