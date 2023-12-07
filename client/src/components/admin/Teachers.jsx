@@ -21,6 +21,7 @@ const Teachers = () => {
 			<div className="flex justify-between sm:flex-col flex-wrap gap-4 border-b-2 border-b-black pb-8">
 				<h1 className="text-4xl font-bold ">Teachers</h1>
 				<input
+					placeholder="Search for a teacher"
 					onChange={e => setQuery(e.target.value.toLowerCase())}
 					className=" rounded-md w-1/2 md:w-full border-2  border-gray-400 px-4 py-2 focus:outline-none md:order-3"
 					type="text"
@@ -43,9 +44,7 @@ const Teachers = () => {
 						>
 							<div className=" bg-primary shadow-md rounded-md  p-4 flex basis-10 justify-between border-2 border-gray-400">
 								<div>
-									<h1 className="text-xl font-bold ">
-										{teacher.name}
-									</h1>
+									<h1 className="text-xl font-bold ">{teacher.name}</h1>
 									<p className="text-gray-400">{teacher.email}</p>
 								</div>
 							</div>

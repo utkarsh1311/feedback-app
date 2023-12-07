@@ -15,7 +15,7 @@
     },
     {
       "id": 4,
-      "status": "ACTIVE",
+      "status": "INACTIVE",
       "name": "Eren Yeager",
       "email": "teacher4@example.com",
       "phone": "777-777-7777",
@@ -68,6 +68,17 @@
       ],
       "id": 7,
       "status": "ACTIVE"
+    },
+    {
+      "name": "Shivani Maurya",
+      "phoneNumber": "9956990099",
+      "email": "itsshivi@gmail.com",
+      "password": "Helohello",
+      "assignedStudents": [
+        "Damon",
+        "Stephan"
+      ],
+      "id": 8
     }
   ],
   "students": [
