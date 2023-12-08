@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import teacherService from "../../services/teacherService";
 
 const AddTeacher = () => {
 	const [assignedStudents, setassignedStudents] = useState([]);
@@ -18,17 +18,13 @@ const AddTeacher = () => {
 	const onSubmit = async data => {
 		// combine data and assignedStudents in one object
 		try {
-			await axios.post("http://localhost:3001/teachers", {
-				...data,
-				assignedStudents,
-			});
+			await teacherService.createTeacher({ ...data, assignedStudents });
 			alert("Teacher added successfully");
 			setassignedStudents([]);
 			reset();
 			navigate(-1);
 		} catch (error) {
-			alert("Something went wrong");
-			console.log(error);
+			alert(error.response.data.message);
 		}
 	};
 
@@ -80,8 +76,8 @@ const AddTeacher = () => {
 										Phone Number
 									</label>
 									<input
-										id="phoneNumber"
-										{...register("phoneNumber", {
+										id="phone"
+										{...register("phone", {
 											required: "Phone Number is required.",
 										})}
 										placeholder="Enter teacher's phone number"
@@ -89,9 +85,9 @@ const AddTeacher = () => {
 										type="text"
 										className="w-full outline-none border-2  focus:outline-none p-3 rounded-lg text-sm "
 									/>
-									{errors.phoneNumber && (
+									{errors.phone && (
 										<p className="text-sm font-semibold text-red-600">
-											{errors.phoneNumber.message}
+											{errors.phone.message}
 										</p>
 									)}
 								</div>

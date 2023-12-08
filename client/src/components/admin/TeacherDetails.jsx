@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../assets/Loader.svg";
+import teacherService from "../../services/teacherService";
 
 const TeacherDetails = () => {
 	const { id } = useParams();
@@ -12,6 +12,7 @@ const TeacherDetails = () => {
 	const [student, setStudent] = useState("");
 	const [teacher, setTeacher] = useState();
 
+	console.log(id);
 	const navigate = useNavigate();
 
 	const {
@@ -25,7 +26,7 @@ const TeacherDetails = () => {
 		const getTeacher = async () => {
 			try {
 				setLoading(true);
-				const res = await axios.get(`http://localhost:3001/teachers/${id}`);
+				const res = await teacherService.getTeacherById(id);
 				setTeacher(res.data);
 				setAssignedStudents(res.data.assignedStudents);
 				setLoading(false);
@@ -45,7 +46,7 @@ const TeacherDetails = () => {
 		};
 
 		try {
-			await axios.put(`http://localhost:3001/teachers/${id}`, newTeacher);
+			await teacherService.updateTeacher(id, newTeacher);
 			alert("Teacher details updated successfully");
 			setAssignedStudents([]);
 			reset();
@@ -73,10 +74,7 @@ const TeacherDetails = () => {
 		const currentStatus = teacher.status;
 		const newStatus = currentStatus == "ACTIVE" ? "INACTIVE" : "ACTIVE";
 		try {
-			await axios.put(`http://localhost:3001/teachers/${id}`, {
-				...teacher,
-				status: newStatus,
-			});
+			await teacherService.updateTeacher(id, { ...teacher, status: newStatus });
 			setTeacher({ ...teacher, status: newStatus });
 		} catch (error) {
 			console.log(error);
@@ -87,7 +85,7 @@ const TeacherDetails = () => {
 		try {
 			let res = confirm("Are you sure you want to delete this teacher?");
 			if (!res) return;
-			await axios.delete(`http://localhost:3001/teachers/${id}`);
+			await teacherService.deleteTeacher(id);
 			alert("Teacher deleted successfully");
 			navigate(-1);
 		} catch (error) {
@@ -95,7 +93,6 @@ const TeacherDetails = () => {
 		}
 	};
 
-	
 	return (
 		<>
 			{loading ? (
