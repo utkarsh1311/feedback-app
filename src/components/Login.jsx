@@ -1,4 +1,3 @@
-import React from "react";
 import loginImg from "../assets/login.jpg";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -14,11 +13,14 @@ const Login = () => {
 	const onSubmit = data => {
 		console.log(data);
 		localStorage.setItem("user", JSON.stringify(data));
-		if (data.email == "admin@gmail.com" && data.password == "admin123") {
+		if (
+			data.email == import.meta.env.VITE_ADMIN_MAIL &&
+			data.password == import.meta.env.VITE_ADMIN_PASSWORD
+		) {
 			navigate("/admin");
 		} else if (
-			data.email == "teacher@gmail.com" &&
-			data.password == "teacher123"
+			data.email == import.meta.env.VITE_TEACHER_MAIL &&
+			data.password == import.meta.env.VITE_TEACHER_PASSWORD
 		) {
 			navigate("/teacher");
 		} else {
