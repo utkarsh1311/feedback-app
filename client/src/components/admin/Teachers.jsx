@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import teacherService from "../../services/teacherService";
 
 const Teachers = () => {
 	const [query, setQuery] = useState("");
@@ -9,8 +9,13 @@ const Teachers = () => {
 
 	useEffect(() => {
 		const getTeachers = async () => {
-			const res = await axios.get(`http://localhost:3001/teachers`);
-			setTeachers(res.data);
+			try {
+				const res = await teacherService.getAllTeachers();
+				setTeachers(res.data);
+			} catch (error) {
+				alert(error.response.data.message);
+				console.log(error);
+			}
 		};
 
 		getTeachers();
