@@ -1,14 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Slide } from "react-awesome-reveal";
 import FormFeedback from "./FormFeedback";
 import TableFeedback from "./TableFeedback";
+import teacherService from "../../services/teacherService";
 
 const TeacherFeedback = () => {
 	const [activeTab, setActiveTab] = useState(1);
+	const [teacher, setTeacher] = useState({
+		assignedStudents: ["No Student"],
+		createdAt: "2023-12-08T00:00:00.000Z",
+		email: "test@gmail.com",
+		id: "34ab3671-281c-40db-b901-81173149d4b6",
+		name: "Test",
+	});
 
 	const handleTabClick = id => {
 		setActiveTab(id);
 	};
+	
+	useEffect(() => {
+		const getStudents = async () => {
+			const teacher = await teacherService.getTeacherById(
+				"34ab3671-281c-40db-b901-81173149d4b6",
+			);
+
+			setTeacher(teacher.data);
+		};
+		getStudents();
+	}, []);
 
 	return (
 		<div>
@@ -39,8 +58,8 @@ const TeacherFeedback = () => {
 
 			<div className="tab_content">
 				<Slide direction="up" duration={500}>
-					{activeTab === 1 && <FormFeedback />}
-					{activeTab === 2 && <TableFeedback />}
+					{activeTab === 1 && <FormFeedback teacher={teacher} />}
+					{activeTab === 2 && <TableFeedback teacher={teacher} />}
 				</Slide>
 			</div>
 		</div>

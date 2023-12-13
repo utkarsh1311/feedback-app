@@ -1,173 +1,65 @@
-import  {
-    useCallback,
-    useMemo,
-    useRef,
-    useState
-} from "react";
-// import { createRoot } from "react-dom/client";
-import { AgGridReact } from "ag-grid-react"; // the AG Grid React Component
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 
-import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
-import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
+import { AgGridReact } from "ag-grid-react";
 
-const ActionButtons = () => {
-	return (
-		<div className="flex justify-center gap-4 items-center h-full">
-			<button className="bg-sec_dark w-fit rounded-md px-2 text-white font-semibold">
-				Edit
-			</button>
-			<button className="bg-sec_dark w-fit rounded-md px-2 text-white font-semibold">
-				Delete
-			</button>
-		</div>
-	);
-};
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import feedbackService from "../../services/feedbackService";
+import teacherService from "../../services/teacherService";
 
 const TableFeedback = () => {
-	const gridRef = useRef(); // Optional - for accessing Grid's API
-	const [rowData, setRowData] = useState([
-		// set row data of student, date, month, weekday, subject, topic, test score, feeback on 20 words each
-		{
-			student: "Akash",
-			date: "01/01/2021",
-			month: "January",
-			weekday: "Monday",
-			subject: "Maths",
-			topic: "Algebra",
-			testScore: "80",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate",
-		},
-		{
-			student: "Rakesh",
-			date: "02/01/2021",
-			month: "January",
-			weekday: "Tuesday",
-			subject: "Science",
-			topic: "Physics",
-			testScore: "70",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate ",
-		},
-		{
-			student: "Tillu",
-			date: "03/01/2021",
-			month: "January",
-			weekday: "Wednesday",
-			subject: "English",
-			topic: "Grammar",
-			testScore: "60",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate ",
-		},
-		{
-			student: "Mishrain",
-			date: "04/01/2021",
-			month: "January",
-			weekday: "Thursday",
-			subject: "Hindi",
-			topic: "Grammar",
-			testScore: "50",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate ",
-		},
-		{
-			student: "Prabhat",
-			date: "05/01/2021",
-			month: "January",
-			weekday: "Friday",
-			subject: "Social Science",
-			topic: "History",
-			testScore: "40",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad ",
-		},
-		{
-			student: "Purnima",
-			date: "06/01/2021",
-			month: "January",
-			weekday: "Saturday",
-			subject: "Maths",
-			topic: "Algebra",
-			testScore: "30",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam ",
-		},
-		{
-			student: "Sagar",
-			date: "07/01/2021",
-			month: "January",
-			weekday: "Sunday",
-			subject: "Science",
-			topic: "Physics",
-			testScore: "20",
-			feedback:
-				"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque, est?",
-		},
-		{
-			student: "Tanish",
-			date: "08/01/2021",
-			month: "January",
-			weekday: "Monday",
-			subject: "English",
-			topic: "Grammar",
-			testScore: "10",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad  ",
-		},
-		{
-			student: "Aman",
-			date: "09/01/2021",
-			month: "January",
-			weekday: "Tuesday",
-			subject: "Hindi",
-			topic: "Grammar",
-			testScore: "80",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad",
-		},
-		{
-			student: "Jay",
-			date: "10/01/2021",
-			month: "January",
-			weekday: "Wednesday",
-			subject: "Social Science",
-			topic: "History",
-			testScore: "70",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate ",
-		},
-		{
-			student: "Srishti",
-			date: "11/01/2021",
-			month: "January",
-			weekday: "Thursday",
-			subject: "Maths",
-			topic: "Algebra",
-			testScore: "60",
-			feedback:
-				"lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad",
-		},
-	]);
-	// const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
-	// const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
+	const [inputRow, setInputRow] = useState(false);
+	const gridRef = useRef();
+	const [feedbackCount, setFeedbackCount] = useState(0);
+	const [loader, setLoader] = useState(false);
+	const [rowData, setRowData] = useState(null);
+
+	function convertDateFormat(inputDate) {
+		// Create a new Date object from the input string
+		const dateObject = new Date(inputDate);
+
+		// Extract day, month, and year components
+		const day = String(dateObject.getUTCDate()).padStart(2, "0");
+		const month = String(dateObject.getUTCMonth() + 1).padStart(2, "0"); // Months are zero-based
+		const year = String(dateObject.getUTCFullYear()).slice(-2); // Get the last two digits of the year
+
+		// Concatenate the components to form the DDMMYY format
+		const result = `${day}/${month}/${year}`;
+
+		return result;
+	}
+
+	const converter = feedbacks => {
+		const data = feedbacks
+			.map(row => {
+				return {
+					...row,
+					createdAt: convertDateFormat(row.createdAt),
+				};
+			})
+			.toReversed();
+		setRowData([...data]);
+	};
+
+	useEffect(() => {
+		console.log("hello world");
+		const getStudents = async () => {
+			const teacher = await teacherService.getTeacherById(
+				"34ab3671-281c-40db-b901-81173149d4b6",
+			);
+
+			converter(teacher.data.feedbacks);
+		};
+		getStudents();
+	}, [feedbackCount]);
 
 	// Each Column Definition results in one Column.
 	const [columnDefs, setColumnDefs] = useState([
 		// set columns def of student, date, month, weekday, subject, topic, test score, feeback
-		{
-			headerName: "",
-			field: "select",
-			checkboxSelection: true,
-			headerCheckboxSelection: true,
 
-			width: 50,
-			pinned: "left",
-			editable: false,
-			headecheckboxSelectionrName: "Select",
-		},
 		{ headerName: "Student", field: "student" },
-		{ headerName: "Date", field: "date" },
+		{ headerName: "Date", field: "createdAt" },
 		{ headerName: "Month", field: "month" },
 		{ headerName: "Weekday", field: "weekday" },
 		{ headerName: "Subject", field: "subject" },
@@ -189,7 +81,7 @@ const TableFeedback = () => {
 			sortable: true,
 			filter: true,
 			// resizable: true,
-			editable: true,
+			// editable: true,
 		}),
 		[],
 	);
@@ -214,31 +106,47 @@ const TableFeedback = () => {
 		gridRef.current.api.exportDataAsCsv(params);
 	}, []);
 
-	const addRow = useCallback(() => {
-		gridRef.current.api.applyTransaction({
-			add: [
-				{
-					student: "Enter Name",
-					date: "Enter Date",
-					month: " Enter Month",
-					weekday: "  Enter Weekday",
-					subject: " Enter Subject",
-					topic: " Enter Topic",
-					testScore: " Enter Test Score",
-					feedback: " Enter Feedback",
-				},
-			],
-			addIndex: 0,
-		});
-
-		gridOptions.api.setPinnedTopRowData([inputRow]);
-	}, []);
+	const addRow = () => {
+		setInputRow(!inputRow);
+	};
 
 	// Example of consuming Grid Event
 
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
+
+	const onSubmit = async data => {
+		try {
+			setLoader(true);
+			const feedbackData = {
+				student: data.student,
+				subject: data.subject,
+				topic: data.topic,
+				duration: parseInt(data.duration),
+				hours: data.hours,
+				testScore: parseInt(data.testScore),
+				feedback: data.feedback,
+				createdAt: data.createdAt,
+			};
+			console.log(feedbackData);
+			const postFeedback = await feedbackService.createFeedback(feedbackData);
+			console.log(postFeedback);
+			setLoader(false);
+			setFeedbackCount(prevCount => prevCount + 1);
+			reset();
+			setInputRow(!inputRow);
+		} catch (error) {
+			console.log(error);
+			alert("Something went wrong");
+		}
+	};
+
 	return (
 		<div>
-			{/* <button className="bg-sec_dark w-fit rounded-md p-2 text-white font-semibold" onClick={onBtnUpdate}>Show CSV export content text</button> */}
 			<div className="flex justify-end">
 				<button
 					className="bg-sec_dark mr-5 my-1.5 w-fit rounded-md p-2 text-white font-semibold"
@@ -250,17 +158,70 @@ const TableFeedback = () => {
 					className="bg-sec_dark mr-5 my-1.5 w-fit rounded-md p-2 text-white font-semibold"
 					onClick={addRow}
 				>
-					Add Row
+					New Feedback
 				</button>
-				<button
-					className="bg-sec_dark mr-5 my-1.5 w-fit rounded-md p-2 text-white font-semibold"
-					onClick={() => {
-						const SelectedRow = gridRef.current.api.getSelectedRows();
-						gridRef.current.api.applyTransaction({ remove: SelectedRow });
-					}}
+			</div>
+
+			<div className="">
+				<form
+					onSubmit={handleSubmit(onSubmit)}
+					className={`px-2 ${
+						inputRow ? "h-16" : "h-0"
+					} transition-all duration-300 ease-in-out `}
 				>
-					Delete
-				</button>
+					<div className="grid grid-cols-8 gap-4 overflow-auto border-2 border-black rounded-lg px-3 py-2">
+						<input
+							type="text"
+							placeholder="Student Name"
+							className="border rounded-md p-2"
+							{...register("student", { required: true })}
+						/>
+						<input
+							type="date"
+							placeholder="date"
+							className="border rounded-md p-2"
+							{...register("createdAt", { required: true, type: "date" })}
+						/>
+						<input
+							type="text"
+							placeholder="Subject"
+							className="border rounded-md p-2"
+							{...register("subject", { required: true })}
+						/>
+						<input
+							type="text"
+							placeholder="Topic"
+							className="border rounded-md p-2"
+							{...register("topic", { required: true })}
+						/>
+						<input
+							type="number"
+							placeholder="Duration (in Hours)"
+							className="border rounded-md p-2"
+							{...register("duration", { required: true, type: "number" })}
+						/>
+						<input
+							type="number"
+							placeholder="Test Score"
+							className="border rounded-md p-2"
+							{...register("testScore", { required: true, type: "number" })}
+						/>
+						<input
+							type="text"
+							placeholder="Feedback"
+							className="border rounded-md p-2"
+							{...register("feedback", { required: true })}
+						/>
+						<input
+							type="submit"
+							value="Submit"
+							className={`border rounded-md p-2 bg-sec_dark text-white font-semibold ${
+								loader ? "cursor-not-allowed" : "cursor-pointer"
+							}`}
+							disabled={loader}
+						/>
+					</div>
+				</form>
 			</div>
 			<div
 				className="ag-theme-alpine"
@@ -272,9 +233,6 @@ const TableFeedback = () => {
 					columnDefs={columnDefs}
 					defaultColDef={defaultColDef}
 					animateRows={true}
-					suppressRowClickSelection={true}
-					stopEditingWhenCellsLoseFocus={true}
-					rowSelection="multiple"
 					rowHeight={120}
 				/>
 			</div>
