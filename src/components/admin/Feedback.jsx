@@ -1,22 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FeedbackTable from "./AdminFeedbackTable";
 
 const Feedback = () => {
 	const [feedbacks, setFeedbacks] = useState([]);
 
-	useEffect(() => {
-		const getFeedbacks = async () => {
-			try {
-				const res = await axios.get(`http://localhost:3001/feedbacks`);
-
-				setFeedbacks(res.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		getFeedbacks();
-	}, []);
 
 	const escapeCSVValue = value => {
 		if (typeof value === "string" && value.includes(",")) {
@@ -34,6 +21,7 @@ const Feedback = () => {
 	};
 
 	const downloadCSV = array => {
+		console.log(feedbacks,"from download csv");
 		const csvContent = arrayToCSV(array);
 		const blob = new Blob([csvContent], { type: "text/csv" });
 		const link = document.createElement("a");
@@ -44,6 +32,7 @@ const Feedback = () => {
 		document.body.removeChild(link);
 	};
 
+	
 	return (
 		<div className="col-span-5 h-full p-4">
 			<div className="flex border-b-2 py-2">
@@ -56,7 +45,7 @@ const Feedback = () => {
 				</button>
 			</div>
 			<div className="mt-4">
-				<FeedbackTable feedbacks={feedbacks} />
+				<FeedbackTable setfeedback={setFeedbacks} />
 			</div>
 		</div>
 	);
