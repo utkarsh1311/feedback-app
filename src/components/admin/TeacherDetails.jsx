@@ -74,7 +74,7 @@ const TeacherDetails = () => {
 		const currentStatus = teacher.status;
 		const newStatus = currentStatus == "ACTIVE" ? "INACTIVE" : "ACTIVE";
 		try {
-			await teacherService.updateTeacher(id, { ...teacher, status: newStatus });
+			await teacherService.updateTeacher(id, { status: newStatus });
 			setTeacher({ ...teacher, status: newStatus });
 		} catch (error) {
 			console.log(error);
