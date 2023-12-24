@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../assets/Loader.svg";
 import teacherService from "../../services/teacherService";
+import helper from "../../services/helper";
 
 const TeacherDetails = () => {
 	const { id } = useParams();
@@ -26,7 +27,10 @@ const TeacherDetails = () => {
 		const getTeacher = async () => {
 			try {
 				setLoading(true);
-				const res = await teacherService.getTeacherById(id);
+				const res = await teacherService.getTeacherById(
+					id,
+					helper.extractToken(),
+				);
 				setTeacher(res.data);
 				setAssignedStudents(res.data.assignedStudents);
 				setLoading(false);
@@ -40,13 +44,15 @@ const TeacherDetails = () => {
 	const onSubmit = async data => {
 		// combine data and assignedStudents in one object
 
+		if (data.password == teacher.password) delete data.password;
+
 		const newTeacher = {
 			...data,
 			assignedStudents,
 		};
 
 		try {
-			await teacherService.updateTeacher(id, newTeacher);
+			await teacherService.updateTeacher(id, newTeacher, helper.extractToken());
 			alert("Teacher details updated successfully");
 			setAssignedStudents([]);
 			reset();
@@ -74,7 +80,11 @@ const TeacherDetails = () => {
 		const currentStatus = teacher.status;
 		const newStatus = currentStatus == "ACTIVE" ? "INACTIVE" : "ACTIVE";
 		try {
-			await teacherService.updateTeacher(id, { status: newStatus });
+			await teacherService.updateTeacher(
+				id,
+				{ status: newStatus },
+				helper.extractToken(),
+			);
 			setTeacher({ ...teacher, status: newStatus });
 		} catch (error) {
 			console.log(error);
@@ -85,7 +95,7 @@ const TeacherDetails = () => {
 		try {
 			let res = confirm("Are you sure you want to delete this teacher?");
 			if (!res) return;
-			await teacherService.deleteTeacher(id);
+			await teacherService.deleteTeacher(id, helper.extractToken());
 			alert("Teacher deleted successfully");
 			navigate(-1);
 		} catch (error) {
