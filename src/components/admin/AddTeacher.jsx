@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import teacherService from "../../services/teacherService";
+import helper from "../../services/helper";
 
 const AddTeacher = () => {
 	const [assignedStudents, setassignedStudents] = useState([]);
@@ -18,7 +19,7 @@ const AddTeacher = () => {
 	const onSubmit = async data => {
 		// combine data and assignedStudents in one object
 		try {
-			await teacherService.createTeacher({ ...data, assignedStudents });
+			await teacherService.createTeacher({ ...data, assignedStudents },helper.extractToken());
 			alert("Teacher added successfully");
 			setassignedStudents([]);
 			reset();

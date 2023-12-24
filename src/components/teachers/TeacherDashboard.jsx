@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import back from "../../assets/back.svg";
 
@@ -6,8 +6,13 @@ const TeacherDashboard = () => {
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (!localStorage.getItem("user")) {
+	useLayoutEffect(() => {
+		if (!localStorage.getItem("token")) {
+			navigate("/");
+		}
+
+		const token = JSON.parse(localStorage.getItem("token"));
+		if (token.role !== "TEACHER") {
 			navigate("/");
 		}
 	}, []);
@@ -28,7 +33,7 @@ const TeacherDashboard = () => {
 				<div className="w-10 aspect-square rounded-full bg-blue-500 ml-auto mx-10"></div>
 				<button
 					onClick={() => {
-						localStorage.removeItem("user");
+						localStorage.removeItem("token");
 						navigate("/");
 					}}
 				>

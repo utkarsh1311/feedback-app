@@ -3,6 +3,7 @@ import { Slide } from "react-awesome-reveal";
 import FormFeedback from "./FormFeedback";
 import TableFeedback from "./TableFeedback";
 import teacherService from "../../services/teacherService";
+import helper from "../../services/helper";
 
 const TeacherFeedback = () => {
 	const [activeTab, setActiveTab] = useState(1);
@@ -17,14 +18,16 @@ const TeacherFeedback = () => {
 	const handleTabClick = id => {
 		setActiveTab(id);
 	};
-	
+
 	useEffect(() => {
 		const getStudents = async () => {
 			const teacher = await teacherService.getTeacherById(
-				"34ab3671-281c-40db-b901-81173149d4b6",
+				JSON.parse(localStorage.getItem("token")).id,
+				helper.extractToken(),
 			);
 
 			setTeacher(teacher.data);
+			console.log(teacher.data);
 		};
 		getStudents();
 	}, []);
@@ -59,7 +62,7 @@ const TeacherFeedback = () => {
 			<div className="tab_content">
 				<Slide direction="up" duration={500}>
 					{activeTab === 1 && <FormFeedback teacher={teacher} />}
-					{activeTab === 2 && <TableFeedback teacher={teacher} />}
+					{activeTab === 2 && <TableFeedback />}
 				</Slide>
 			</div>
 		</div>

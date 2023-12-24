@@ -4,6 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import feedbackService from "../../services/feedbackService";
+import helper from "../../services/helper";
 
 // eslint-disable-next-line react/prop-types
 const FeedbackTable = ({ setfeedback }) => {
@@ -55,7 +56,10 @@ const FeedbackTable = ({ setfeedback }) => {
 					onClick={async () => {
 						if (confirm("Are you sure you want to delete this feedback?")) {
 							try {
-								await feedbackService.deleteFeedback(params.id);
+								await feedbackService.deleteFeedback(
+									params.id,
+									helper.extractToken(),
+								);
 								alert("Feedback Deleted");
 								setCounter(counter + 1);
 							} catch (error) {
@@ -102,7 +106,9 @@ const FeedbackTable = ({ setfeedback }) => {
 	useEffect(() => {
 		const getFeedbacks = async () => {
 			try {
-				const { data } = await feedbackService.getAllFeedbacks();
+				const { data } = await feedbackService.getAllFeedbacks(
+					helper.extractToken(),
+				);
 				console.log(data);
 				converter(data);
 			} catch (error) {
@@ -170,6 +176,7 @@ const FeedbackTable = ({ setfeedback }) => {
 			const postFeedback = await feedbackService.updateFeedback(
 				update.id,
 				feedbackData,
+				helper.extractToken(),
 			);
 			console.log(postFeedback);
 			setLoader(false);

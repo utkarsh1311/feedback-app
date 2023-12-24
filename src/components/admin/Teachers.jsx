@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import teacherService from "../../services/teacherService";
+import helper from "../../services/helper";
 
 const Teachers = () => {
 	const [query, setQuery] = useState("");
@@ -10,7 +11,7 @@ const Teachers = () => {
 	useEffect(() => {
 		const getTeachers = async () => {
 			try {
-				const res = await teacherService.getAllTeachers();
+				const res = await teacherService.getAllTeachers(helper.extractToken());
 				setTeachers(res.data);
 			} catch (error) {
 				alert(error.response.data.message);

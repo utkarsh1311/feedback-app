@@ -1,8 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import teacherService from "../../services/teacherService";
 import feedbackService from "../../services/feedbackService";
+import helper from "../../services/helper";
 
 const FormFeedback = ({ teacher }) => {
 	const [students, setStudents] = useState(teacher.assignedStudents);
@@ -35,7 +34,10 @@ const FormFeedback = ({ teacher }) => {
 				createdAt: data.createdAt,
 			};
 			console.log(feedbackData);
-			const postFeedback = await feedbackService.createFeedback(feedbackData);
+			const postFeedback = await feedbackService.createFeedback(
+				feedbackData,
+				helper.extractToken(),
+			);
 			alert("Feedback Submitted");
 			console.log(postFeedback);
 			setLoader(false);
@@ -57,6 +59,11 @@ const FormFeedback = ({ teacher }) => {
 		"Hindi",
 		"Social Science",
 	];
+	// useEffect(() => {
+	// 	if (!localStorage.getItem("token")) {
+	// 		navigate("/");
+	// 	}
+	// }, []);
 	return (
 		<div className="flex flex-col items-center rounded-lg  justify-center flex-grow-1 py-4 text-black">
 			<form className="grid grid-cols-2 gap-6 font-primary  w-full p-10">

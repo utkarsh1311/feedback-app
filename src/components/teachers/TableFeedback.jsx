@@ -7,6 +7,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import feedbackService from "../../services/feedbackService";
 import teacherService from "../../services/teacherService";
+import helper from "../../services/helper";
 
 const TableFeedback = () => {
 	const [inputRow, setInputRow] = useState(false);
@@ -41,14 +42,18 @@ const TableFeedback = () => {
 			.toReversed();
 		setRowData([...data]);
 	};
+	
 
 	useEffect(() => {
-		console.log("hello world");
+		
+			
+		console.log(helper.extractToken());
+		
 		const getStudents = async () => {
 			const teacher = await teacherService.getTeacherById(
-				"34ab3671-281c-40db-b901-81173149d4b6",
+				JSON.parse(localStorage.getItem("token")).id,helper.extractToken()
 			);
-
+				console.log(teacher.data)
 			converter(teacher.data.feedbacks);
 		};
 		getStudents();
@@ -86,26 +91,6 @@ const TableFeedback = () => {
 		[],
 	);
 
-	const onBtnExport = useCallback(() => {
-		const params = {
-			fileName: "Feedback data.csv",
-
-			columnKeys: [
-				"student",
-				"date",
-				"month",
-				"weekday",
-				"subject",
-				"topic",
-				"testScore",
-				"feedback",
-			],
-
-			sheetName: "Feedback Data",
-		};
-		gridRef.current.api.exportDataAsCsv(params);
-	}, []);
-
 	const addRow = () => {
 		setInputRow(!inputRow);
 	};
@@ -133,7 +118,7 @@ const TableFeedback = () => {
 				createdAt: data.createdAt,
 			};
 			console.log(feedbackData);
-			const postFeedback = await feedbackService.createFeedback(feedbackData);
+			const postFeedback = await feedbackService.createFeedback(feedbackData,helper.extractToken());
 			console.log(postFeedback);
 			setLoader(false);
 			setFeedbackCount(prevCount => prevCount + 1);
@@ -148,12 +133,6 @@ const TableFeedback = () => {
 	return (
 		<div>
 			<div className="flex justify-end">
-				<button
-					className="bg-sec_dark mr-5 my-1.5 w-fit rounded-md p-2 text-white font-semibold"
-					onClick={onBtnExport}
-				>
-					Download CSV
-				</button>
 				<button
 					className="bg-sec_dark mr-5 my-1.5 w-fit rounded-md p-2 text-white font-semibold"
 					onClick={addRow}

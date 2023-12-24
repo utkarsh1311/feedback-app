@@ -1,17 +1,14 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./components/admin/Home";
+import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
-import AdminDashboard from "./components/admin/AdminDashboard";
-import Teachers from "./components/admin/Teachers";
-import Students from "./components/admin/Students";
-import Feedback from "./components/admin/Feedback";
-import TeachersDetails from "./components/admin/TeacherDetails";
 import AddTeacher from "./components/admin/AddTeacher";
-import AddStudent from "./components/admin/AddStudent";
-import StudentDetails from "./components/admin/StudentDetails";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import Feedback from "./components/admin/Feedback";
+import Home from "./components/admin/Home";
+import TeachersDetails from "./components/admin/TeacherDetails";
+import Teachers from "./components/admin/Teachers";
 import TeacherDashboard from "./components/teachers/TeacherDashboard";
-import TeacherHome from "./components/teachers/TeacherHome";
 import TeacherFeedback from "./components/teachers/TeacherFeedback";
+import TeacherHome from "./components/teachers/TeacherHome";
 
 function App() {
 	return (
@@ -22,11 +19,8 @@ function App() {
 					<Route index element={<Home />} />
 					<Route path="teachers" element={<Teachers />} />
 					<Route path="teachers/:id" element={<TeachersDetails />} />
-					<Route path="students" element={<Students />} />
-					<Route path="students/:id" element={<StudentDetails />} />
 					<Route path="feedbacks" element={<Feedback />} />
 					<Route path="addTeacher" element={<AddTeacher />} />
-					<Route path="addStudent" element={<AddStudent />} />
 				</Route>
 				<Route path="/teacher" element={<TeacherDashboard />}>
 					{/*  />
