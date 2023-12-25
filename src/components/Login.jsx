@@ -45,8 +45,6 @@ const Login = () => {
 					role: res.data.role,
 				};
 				localStorage.setItem("token", JSON.stringify(userData));
-				setLoader(false);
-				alert("Login Successful");
 				navigate("/admin");
 				return;
 			} else if (loginAs === "teacher") {
@@ -58,15 +56,14 @@ const Login = () => {
 					role: res.data.role,
 				};
 				localStorage.setItem("token", JSON.stringify(userData));
-				setLoader(false);
-				alert("Login Successful");
 				navigate("/teacher");
 				return;
 			}
 		} catch (error) {
-			setLoader(false);
-			// alert(error.response.data.message);
+			alert(error.response.data.message);
 			console.log(error);
+		} finally {
+			setLoader(false);
 		}
 	};
 
@@ -164,7 +161,11 @@ const Login = () => {
 								type="submit"
 								disabled={loader}
 							>
-								Login
+								{loader ? (
+									"Loading..."
+								) : (
+									"Login"
+								)}
 							</button>
 						</div>
 					</form>
