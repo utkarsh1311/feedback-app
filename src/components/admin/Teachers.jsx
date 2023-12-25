@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import teacherService from "../../services/teacherService";
 import helper from "../../services/helper";
+import teacherService from "../../services/teacherService";
 
 const Teachers = () => {
 	const [query, setQuery] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	const [teachers, setTeachers] = useState([]);
 
 	useEffect(() => {
 		const getTeachers = async () => {
 			try {
+				setLoading(true);
 				const res = await teacherService.getAllTeachers(helper.extractToken());
 				setTeachers(res.data);
 			} catch (error) {
 				alert(error.response.data.message);
 				console.log(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
@@ -40,22 +44,42 @@ const Teachers = () => {
 				</Link>
 			</div>
 			<div className="grid grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10">
-				{teachers
-					?.filter(t => t.name.toLowerCase().startsWith(query))
-					.map(teacher => (
-						<Link
-							key={teacher.id}
-							className=""
-							to={`/admin/teachers/${teacher.id}`}
-						>
-							<div className=" bg-primary shadow-md rounded-md  p-4 flex basis-10 justify-between border-2 border-gray-400">
-								<div>
-									<h1 className="text-xl font-bold ">{teacher.name}</h1>
-									<p className="text-gray-400">{teacher.email}</p>
+				{loading ? (
+					<>
+						{[...Array(8)].map((_, i) => (
+							<div
+								key={i}
+								className=" bg-primary shadow-md rounded-md  p-4 flex basis-10 justify-between border-2 border-gray-200"
+							>
+								<div className="flex animate-pulse flex-row items-center h-full justify-center space-x-5">
+									<div className="flex flex-col space-y-3">
+										<div className=" w-72 bg-gray-300 h-6 rounded-md "></div>
+										<div className="w-24 bg-gray-300 h-5 rounded-md "></div>
+									</div>
 								</div>
 							</div>
-						</Link>
-					))}
+						))}
+					</>
+				) : (
+					<>
+						{teachers
+							?.filter(t => t.name.toLowerCase().startsWith(query))
+							.map(teacher => (
+								<Link
+									key={teacher.id}
+									className=""
+									to={`/admin/teachers/${teacher.id}`}
+								>
+									<div className=" bg-primary shadow-md rounded-md  p-4 flex basis-10 justify-between border-2 border-gray-400">
+										<div>
+											<h1 className="text-xl font-bold ">{teacher.name}</h1>
+											<p className="text-gray-400">{teacher.email}</p>
+										</div>
+									</div>
+								</Link>
+							))}
+					</>
+				)}
 			</div>
 		</div>
 	);
